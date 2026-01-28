@@ -37,7 +37,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // src/context/AuthContext.jsx
 
 const signup = async (userData) => {
   try {
@@ -48,7 +47,7 @@ const signup = async (userData) => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     
     setUser(user);
-    return { success: true }; // ✅ Return success
+    return { success: true }; 
   } catch (err) {
     console.error('Signup error details:', err.response?.data);
     return { 
@@ -61,7 +60,7 @@ const signup = async (userData) => {
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
-    window.location.href = '/';  // ✅ Manual redirect
+    window.location.href = '/';  
   };
 
   return (
