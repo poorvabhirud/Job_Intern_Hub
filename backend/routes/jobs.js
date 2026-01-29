@@ -4,6 +4,14 @@ const admin = require('../middleware/admin');
 const Job = require('../models/Job');
 const router = express.Router();
 
+router.get('/admin', async (req, res) => {
+  try {
+    const jobs = await Job.find({}).sort({ createdAt: 1 }); 
+    res.json(jobs);
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+});
 router.get('/', async (req, res) => {
   try {
     const { page = 1, limit = 9, search, type, location, skills } = req.query;
@@ -14,16 +22,29 @@ router.get('/', async (req, res) => {
     if (location) query.location = { $regex: location, $options: 'i' };
     if (skills) query.skills = { $regex: skills, $options: 'i' };
 
+
+    const total = await Job.countDocuments(query); 
+
     const jobs = await Job.find(query)
+      .sort({ createdAt: 1 }) 
       .limit(limit * 1)
       .skip((page - 1) * limit);
     
-    res.json(jobs);
+    res.json({ jobs, total }); 
   } catch (err) {
     res.status(500).json({ msg: err.message });
   }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.id);
+    if (!job) return res.status(404).json({ msg: 'Job not found' });
+    res.json(job);
+  } catch (err) {
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
 
 router.post('/', auth, admin, async (req, res) => {
   try {

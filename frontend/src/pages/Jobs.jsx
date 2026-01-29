@@ -13,12 +13,17 @@ const Jobs = () => {
   });
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);  
+  const [totalJobs, setTotalJobs] = useState(0);
+  
 
   const jobsPerPage = 9;
 
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_API_URL}/api/jobs`, { params: { ...filters, page, limit: jobsPerPage } })
-      .then(res => setJobs(res.data))
+      .then(res => {
+      setJobs(res.data.jobs);      
+      setTotalJobs(res.data.total); 
+      })
       .catch(err => console.error(err))
       .finally(() => setLoading(false));
   }, [filters, page]);  
@@ -31,7 +36,8 @@ const Jobs = () => {
     );
   }
 
-  const totalPages = Math.ceil(jobs.length / jobsPerPage);  
+const totalPages = Math.ceil(totalJobs / jobsPerPage); 
+   
 
   return (
     <div className="max-w-7xl mx-auto p-6">
@@ -85,7 +91,8 @@ const Jobs = () => {
           {jobs.length > 0 && (
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white p-6 rounded-2xl shadow-lg sticky bottom-0">
               <div className="text-sm text-gray-600">
-                Showing {((page-1)*jobsPerPage)+1}-{Math.min(page*jobsPerPage, jobs.length)} of {jobs.length} jobs
+                Showing {((page-1)*jobsPerPage)+1}-{Math.min(page*jobsPerPage, totalJobs)} of {totalJobs} jobs
+
               </div>
               <div className="flex gap-2">
                 <button 
@@ -97,7 +104,7 @@ const Jobs = () => {
                 </button>
                 <span className="px-6 py-3 font-bold text-lg">{page}</span>
                 <button 
-                  disabled={jobs.length < jobsPerPage}
+                  disabled={page >= totalPages}
                   onClick={() => setPage(p => p+1)}
                   className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:opacity-50 font-medium transition-all shadow-lg"
                 >

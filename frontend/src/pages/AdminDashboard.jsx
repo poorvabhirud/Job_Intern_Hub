@@ -27,7 +27,7 @@ const AdminDashboard = () => {
 
     Promise.all([
       axios.get(`${import.meta.env.VITE_API_URL}/api/applications`, { params }),
-      axios.get(`${import.meta.env.VITE_API_URL}/api/jobs`)
+      axios.get(`${import.meta.env.VITE_API_URL}/api/jobs/admin`)
     ])
       .then(([appsRes, jobsRes]) => {
         setApplications(appsRes.data);

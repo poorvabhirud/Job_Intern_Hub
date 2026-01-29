@@ -16,8 +16,15 @@ const JobDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL}/api/jobs`)
-      .then(res => setJob(res.data.find(j => j._id === id)))
+    setLoading(true);
+    axios.get(`${import.meta.env.VITE_API_URL}/api/jobs/${id}`)
+      .then(res => {
+        setJob(res.data); 
+      })
+      .catch(err => {
+        console.error('Job fetch error:', err);
+        setJob(null);
+      })
       .finally(() => setLoading(false));
   }, [id]);
 
