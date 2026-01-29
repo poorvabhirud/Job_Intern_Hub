@@ -92,7 +92,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="space-y-10 pb-20">
-      {/* SECTION 1: POST NEW JOB */}
       <div className="card">
         <h2 className="text-2xl font-bold mb-4">Post a New Job / Internship</h2>
         <form onSubmit={handleJobSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -160,7 +159,6 @@ const AdminDashboard = () => {
         </form>
       </div>
 
-      {/* SECTION 2: APPLICATIONS LIST */}
       <div className="card">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
           <h2 className="text-2xl font-bold">Applications</h2>
@@ -191,10 +189,8 @@ const AdminDashboard = () => {
 
 <button 
   onClick={() => {
-    // Create CSV header
     let csvContent = "data:text/csv;charset=utf-8,Applicant,Email,Job,Status,AppliedDate\n";
     
-    // Add application rows
     applications.forEach(app => {
       const row = [
         app.userId?.name,
@@ -206,7 +202,6 @@ const AdminDashboard = () => {
       csvContent += row + "\n";
     });
 
-    // Download the file
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
@@ -289,16 +284,15 @@ const AdminDashboard = () => {
             </td>
             <td className="px-4 py-4 text-gray-600">{job.location}</td>
             <td className="px-4 py-4 space-x-2">
-              {/* 🔁 TOGGLE ACTIVE/CLOSED */}
               <button
                 onClick={async () => {
                   try {
                     const newStatus = !job.isActive;
                     await axios.put(
-                      `${import.meta.env.VITE_API_URL}/jobs/${job._id}`,
+                      `${import.meta.env.VITE_API_URL}/api/jobs/${job._id}`,
                       { isActive: newStatus }
                     );
-                    fetchData(); // refresh jobs + applications
+                    fetchData(); 
                     alert(`Job ${newStatus ? 'Activated' : 'Closed'}`);
                   } catch (err) {
                     alert('Status change failed');
@@ -319,9 +313,9 @@ const AdminDashboard = () => {
                   if (confirm(`Delete "${job.title}"?`)) {
                     try {
                       await axios.delete(
-                        `${import.meta.env.VITE_API_URL}/jobs/${job._id}`
+                        `${import.meta.env.VITE_API_URL}/api/jobs/${job._id}`
                       );
-                      fetchData(); // Refresh both lists
+                      fetchData(); 
                       alert('✅ Job deleted!');
                     } catch (err) {
                       alert('Delete failed');

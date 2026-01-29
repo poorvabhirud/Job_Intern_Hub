@@ -1,10 +1,8 @@
 import React from 'react';
 
 const StatusBadge = ({ status }) => {
-  // Default status if undefined
   const safeStatus = status || 'Applied';
 
-  // Tailwind classes for each status
   const getStatusClasses = (status) => {
     switch(status) {
       case 'Applied':

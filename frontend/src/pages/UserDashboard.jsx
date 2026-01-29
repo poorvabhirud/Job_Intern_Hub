@@ -8,7 +8,7 @@ const UserDashboard = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_URL}/applications/me`)
+      .get(`${import.meta.env.VITE_API_URL}/api/applications/me`)
       .then(res => {
         const safeApps = Array.isArray(res.data) 
           ? res.data.map(app => ({

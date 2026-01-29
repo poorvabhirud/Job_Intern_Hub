@@ -7,7 +7,6 @@ const JobCard = ({ job }) => {
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300 group cursor-pointer hover:scale-[1.02]">
-      {/* ✅ NEW: Stipend & Title Row */}
       <div className="flex justify-between items-start mb-4">
         <h3 className="text-2xl font-bold text-gray-900">{job.title}</h3>
         {job.stipend && (

@@ -30,7 +30,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto px-6">
         {[
           { label: 'Active Postings', value: '500+' },
@@ -45,7 +44,6 @@ const Landing = () => {
         ))}
       </section>
 
-      {/* Features Grid */}
       <section className="max-w-7xl mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">Why Choose Hub?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -75,7 +73,7 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+
       <section className="max-w-6xl mx-auto px-6">
         <div className="bg-gray-900 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
           <div className="relative z-10">
@@ -92,7 +90,6 @@ const Landing = () => {
               Get Started for Free
             </Link>
           </div>
-          {/* Decorative background blur */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-[120px] opacity-20 -translate-y-1/2 translate-x-1/2"></div>
         </div>
       </section>
