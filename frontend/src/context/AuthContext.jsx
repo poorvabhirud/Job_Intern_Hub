@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      axios.get(`${import.meta.env.VITE_API_URL}/auth/me`)
+      axios.get(`${import.meta.env.VITE_API_URL}/api/auth/me`)
         .then(res => setUser(res.data))
         .catch(() => localStorage.removeItem('token'))
         .finally(() => setLoading(false));
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, { email, password });
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, { email, password });
       localStorage.setItem('token', res.data.token);
       setUser(res.data.user);
       return { success: true };
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
 const signup = async (userData) => {
   try {
-    const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signup`, userData);
+    const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signup`, userData);
     const { token, user } = res.data;
     
     localStorage.setItem('token', token);

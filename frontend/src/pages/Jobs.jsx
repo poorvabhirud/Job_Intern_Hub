@@ -9,19 +9,19 @@ const Jobs = () => {
     type: '', 
     location: '', 
     skills: '', 
-    search: ''  // ✅ NEW: Search
+    search: ''  
   });
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);  // ✅ NEW: Pagination
+  const [page, setPage] = useState(1);  
 
   const jobsPerPage = 9;
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL}/jobs`, { params: { ...filters, page, limit: jobsPerPage } })
+    axios.get(`${import.meta.env.VITE_API_URL}/api/jobs`, { params: { ...filters, page, limit: jobsPerPage } })
       .then(res => setJobs(res.data))
       .catch(err => console.error(err))
       .finally(() => setLoading(false));
-  }, [filters, page]);  // ✅ Added page
+  }, [filters, page]);  
 
   if (loading) {
     return (
@@ -31,12 +31,12 @@ const Jobs = () => {
     );
   }
 
-  const totalPages = Math.ceil(jobs.length / jobsPerPage);  // ✅ Pagination calc
+  const totalPages = Math.ceil(jobs.length / jobsPerPage);  
 
   return (
     <div className="max-w-7xl mx-auto p-6">
       <div className="flex flex-col lg:flex-row gap-8">
-        {/* ✅ Sidebar Filters */}
+        
         <div className="lg:w-1/4 space-y-4 sticky top-8">
           <input
             placeholder="🔍 Search jobs..."
@@ -65,7 +65,6 @@ const Jobs = () => {
             value={filters.skills}
             onChange={e => setFilters({ ...filters, skills: e.target.value })}
           />
-          {/* ✅ NEW: Clear Filters */}
           <button 
             onClick={() => setFilters({ type: '', location: '', skills: '', search: '' })}
             className="w-full p-4 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-xl hover:shadow-lg transform hover:-translate-y-0.5 transition-all font-medium"
@@ -74,7 +73,6 @@ const Jobs = () => {
           </button>
         </div>
 
-        {/* ✅ Job Grid */}
         <div className="lg:w-3/4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             {jobs.map(job => (
@@ -84,7 +82,6 @@ const Jobs = () => {
             ))}
           </div>
 
-          {/* ✅ NEW: Pagination */}
           {jobs.length > 0 && (
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white p-6 rounded-2xl shadow-lg sticky bottom-0">
               <div className="text-sm text-gray-600">

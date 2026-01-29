@@ -16,7 +16,7 @@ const JobDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL}/jobs`)
+    axios.get(`${import.meta.env.VITE_API_URL}/api/jobs`)
       .then(res => setJob(res.data.find(j => j._id === id)))
       .finally(() => setLoading(false));
   }, [id]);
@@ -26,7 +26,7 @@ const JobDetail = () => {
     if (!user) return navigate('/login');
     setAppLoading(true);
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/applications`, { jobId: id, ...formData });
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/applications`, { jobId: id, ...formData });
       alert('Applied successfully!');
       navigate('/dashboard/user');
     } catch (err) {

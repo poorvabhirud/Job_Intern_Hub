@@ -5,12 +5,12 @@ const User = require('../models/User');
 const router = express.Router();
 
 router.post('/signup', async (req, res) => {
-  const { name, email, password, role } = req.body; // ✅ Ensure 'role' is included
+  const { name, email, password, role } = req.body;
   try {
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ msg: 'User already exists' });
 
-    // Store 'password' as the field name if that's what your schema uses
+
     const hashedPassword = await bcrypt.hash(password, 10);
     user = new User({ 
       name, 
@@ -45,10 +45,9 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Add this COMPLETE route
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];  // Bearer TOKEN
+  const token = authHeader && authHeader.split(' ')[1];  
   
   if (!token) return res.status(401).json({ msg: 'Access token required' });
   
@@ -59,7 +58,6 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-// ✅ ADD THIS ENDPOINT
 router.get('/me', authenticateToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-passwordHash');

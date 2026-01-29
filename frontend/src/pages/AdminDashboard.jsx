@@ -26,8 +26,8 @@ const AdminDashboard = () => {
     if (filters.jobId) params.jobId = filters.jobId;
 
     Promise.all([
-      axios.get(`${import.meta.env.VITE_API_URL}/applications`, { params }),
-      axios.get(`${import.meta.env.VITE_API_URL}/jobs`)
+      axios.get(`${import.meta.env.VITE_API_URL}/api/applications`, { params }),
+      axios.get(`${import.meta.env.VITE_API_URL}/api/jobs`)
     ])
       .then(([appsRes, jobsRes]) => {
         setApplications(appsRes.data);
@@ -43,7 +43,7 @@ const AdminDashboard = () => {
 
   const handleStatusChange = async (id, status) => {
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/applications/${id}/status`, { status });
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/applications/${id}/status`, { status });
       fetchData();
     } catch (err) {
       alert(err.response?.data?.msg || 'Error updating status');
@@ -62,7 +62,7 @@ const AdminDashboard = () => {
         ...jobForm,
         skills: jobForm.skills ? jobForm.skills.split(',').map(s => s.trim()).filter(Boolean) : []
       };
-      await axios.post(`${import.meta.env.VITE_API_URL}/jobs`, payload);
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/jobs`, payload);
       alert('Job posted successfully!');
       setJobForm({
         title: '',

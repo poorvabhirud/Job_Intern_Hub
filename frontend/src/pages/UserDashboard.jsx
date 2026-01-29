@@ -10,7 +10,6 @@ const UserDashboard = () => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/applications/me`)
       .then(res => {
-        // Ensure array and handle missing data
         const safeApps = Array.isArray(res.data) 
           ? res.data.map(app => ({
               ...app,

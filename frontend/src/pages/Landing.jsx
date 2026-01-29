@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 const Landing = () => {
   return (
     <div className="space-y-20 pb-20">
-      {/* Hero Section */}
       <section className="text-center py-16 md:py-28 px-4">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8">
